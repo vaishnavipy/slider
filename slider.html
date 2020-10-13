@@ -15,8 +15,130 @@
 
         <style>
 
+            body{
+                margin: 0;
+                padding: 0;
+                background-color: #F1F5F8;
+            text-align: center;
+            padding-top: 50px;
+            }
+            
 
+            #container{
+                margin-top: 50px;
+                border: 4px solid skyblue;
+                width: 80vw;
+                height:60vh;
+                margin: auto;
+                padding-top:20px ;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                text-align: center;
+           
+             position: relative;
+               overflow: hidden;
+
+           
+
+
+            }
+           #image_container{
+               visibility: visible;
+           }
+            
+            #image_container img{
+                  position: absolute;
+                top:0;
+                left:0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+           
+                
+
+            }
+            #two{
+                
+                width: 100%;
+                height: 100%; 
+                background-color: #C5E5FC;
+               
+                
+                 position: absolute;
+                top: 0;
+               
+                transition: transform 1s;
+          
+          
      
+                
+
+            }
+           .move_next{
+            transform: translateX(100%);
+
+           }
+
+           .move_previous{
+            transform :"translateX(0)";
+            }
+
+            .numbers{
+                position: absolute;
+                font-size: 70px;
+                color:white;
+               top:50%;
+               left:50%;
+                display: grid;
+                align-items: center;
+            
+
+               
+            }
+            #two h1{
+               
+                margin: 0;
+            }
+            a{
+                text-decoration: none;
+                color:#617D98;
+                cursor: pointer;
+                padding: 10px;
+               font-size: 20px;
+                margin-top: 20px;
+            }
+            #image_container2{
+
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top:0;
+                
+
+                transition: transform 1s;
+                
+          
+
+
+            }
+            #image_container2::after{
+
+                content: "";
+                background:rgba(0,0,0,0.5);
+              
+                z-index: 0;
+                position: absolute;
+                top:0;
+                bottom: 0;
+                left:0;
+                right:0;
+
+            }
+            #previous{
+                display: none;
+            }
+            
 
         </style>
         
@@ -26,14 +148,97 @@
 
 
     <body>
-       
+        
 
+        <div id="container">
+
+        <div id="image_container"><img src="https://vannilla-js-basic-project-15-slider.netlify.app/img-1.jpeg">   </div>
+        <div id="two" class="move_next" ><span class="numbers">2</span></div>
+            
+        <div id="image_container2" class="move_next"><img src="https://vannilla-js-basic-project-15-slider.netlify.app/img-1.jpeg"> <span class="numbers" style="z-index: 2;">3</span>  </div>
+ 
+        </div>
+        <a href="#" id="previous">PREVIOUS</a> <a href="#" id="next">NEXT</a> 
+      
 
         <script>
 
+           window.onload = function(){
+            let elm;     let children_nodes ;
+           
+            document.getElementById("next").onclick = function(){
+                   
+                 children_nodes = document.getElementById("container").children;
+
+                                 
+                for(var j=0 ; j < children_nodes.length ; j++){
+                    elm= document.getElementById("container").children[j+1];
+
+                    if(!elm.nextElementSibling) {
+
+                    document.getElementById("next").style.display ="none";
+
+
+                    }
+                 
+                   
+                   if(elm.classList.contains("move_next")){
+                    
+
+                    document.getElementById("previous").style.display ="inline";
+
+                    
+
+                    elm.classList.remove("move_next");
+                    elm.classList.add("move_previous")
+                    break;
+                  }
+
+                  }
+
+            }
+
+
+
            
 
+           document.getElementById("previous").onclick = function(){
 
+            //Find visible children
+            for(let i=children_nodes.length ; i > 0 ; i--){
+                    elm= document.getElementById("container").children[i-1];
+console.log(elm.previousElementSibling)
+                    if(!elm.previousElementSibling) {
+
+                    document.getElementById("previous").style.display ="none";
+
+
+                    }
+                 
+                   
+                   if(elm.classList.contains("move_previous")){
+                    
+
+                    document.getElementById("next").style.display ="inline";
+
+                    
+
+                    elm.classList.remove("move_previous");
+                    elm.classList.add("move_next")
+                    break;
+                  }
+
+                  }
+
+
+
+
+                
+
+
+           }
+
+        }
 
         </script>
         
